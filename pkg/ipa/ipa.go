@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"howett.net/plist"
 	"io"
+	"io/ioutil"
 	"path"
 )
 
@@ -32,7 +33,7 @@ func Info(ipaPath string) (info map[string]interface{}, err error) {
 		if rd, _err = file.Open(); _err != nil {
 			return nil, _err
 		}
-		data, _err := io.ReadAll(rd)
+		data, _err := ioutil.ReadAll(rd)
 		if _err != nil {
 			return nil, _err
 		}
