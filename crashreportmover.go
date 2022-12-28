@@ -5,6 +5,7 @@ import (
 	"github.com/electricbubble/gidevice/pkg/libimobiledevice"
 	"howett.net/plist"
 	"io"
+	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -112,7 +113,7 @@ func (c *crashReportMover) Move(hostDir string, opts ...CrashReportMoverOption) 
 	}
 
 	for _, name := range toExtract {
-		data, err := os.ReadFile(name)
+		data, err := ioutil.ReadFile(name)
 		if err != nil {
 			debugLog(fmt.Sprintf("crashReportMover extract read %s: %s", name, err))
 			continue
@@ -128,7 +129,7 @@ func (c *crashReportMover) Move(hostDir string, opts ...CrashReportMoverOption) 
 			continue
 		}
 		hostExtCrash := strings.TrimSuffix(name, ".plist") + ".crash"
-		if err = os.WriteFile(hostExtCrash, []byte(fmt.Sprintf("%v", desc)), 0755); err != nil {
+		if err = ioutil.WriteFile(hostExtCrash, []byte(fmt.Sprintf("%v", desc)), 0755); err != nil {
 			debugLog(fmt.Sprintf("crashReportMover extract save %s: %s", name, err))
 			continue
 		}
